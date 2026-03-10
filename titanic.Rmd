@@ -1,0 +1,60 @@
+---
+ttitle: "Titanic Data"
+output: html_document
+date: "2026-03-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+titanic <- read.csv("~/Desktop/titanic/titanic.csv")
+
+#head(titanic)
+
+
+```
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+
+
+```{r}
+titanic <- titanic %>%
+  mutate(age_group = case_when(
+    Age < 18 ~ "Child",
+    Age <31 ~ "Young Adult",
+    Age < 61 ~ "Adult",
+    .default = "Senior"
+  ))
+
+titanic <- titanic %>%
+  arrange(Age) %>%
+  relocate(Age, Survived)
+
+titanic %>%
+  group_by(age_group) %>%
+  summarise(perc_survived = sum(Survived)/n())
+
+
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
